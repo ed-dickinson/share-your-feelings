@@ -11,4 +11,6 @@ router.get('/', function(req, res, next) {
 router.get('/sign-up', feeler_controller.sign_up);
 router.post('/sign-up', feeler_controller.sign_up_post);
 
+router.get('/feeler/:id', feeler_controller.feeler_page);
+
 module.exports = router;
