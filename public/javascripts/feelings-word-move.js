@@ -4,7 +4,7 @@ let feelings_words = document.querySelectorAll('.feelings-word');
 
 let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
 
-const emoColors = {
+const emoColorsx = {
   happy : 'gold',
   anger : 'tomato',
   sensitive : 'purple',
@@ -15,6 +15,20 @@ const emoColors = {
   sad : 'blue',
   stable : 'brown', //chocolate
   loving : 'pink'
+}
+
+const emoColors = {
+  happy : 'gold', //optimistic, energetic
+  angry : 'tomato', //love, excitement
+  impulsive : 'orange', //enthusiastic
+  fresh : 'springgreen', //envy?
+  growth : 'green', // life
+  grief : 'black',
+  sad : 'blue',
+  wise : 'orchid', //sensive
+  calm : 'deepskyblue',//calm & stable sad?
+  stable : 'brown', //chocolate reliable and strong
+  loving : 'pink' //kind, compassionate
 }
 //chocolate, darkgoldenrod, sienna
 //coral, tomato, firebrick, indianred
@@ -27,17 +41,25 @@ const emoColors = {
 //lightsalmon
 //gold, khaki
 
-let flowers = document.querySelectorAll('.flower');
-
-document.querySelectorAll('.flower').forEach(flower => {
-  flower.style.color = randomFrom(colours);
-});
-
-document.querySelector('.log-in').style.borderColor = randomFrom(colours);
+// let flowers = document.querySelectorAll('.flower');
+//
+// document.querySelectorAll('.flower').forEach(flower => {
+//   flower.style.color = randomFrom(colours);
+// });
+//
+// document.querySelector('.log-in').style.borderColor = randomFrom(colours);
 
 
 function randomFrom(array) {
   return array[Math.floor(Math.random()*array.length)];;
+}
+
+function newColour(oldcolour) {
+  let newI = (colours.indexOf(oldcolour)+(Math.random() < 0.5 ? 1 : 1));
+  // console.log(newI);
+  if (newI == -1) {newI = colours.length-1;}
+  else if (newI == colours.length) {newI = 0}
+  return colours[newI];
 }
 
 let movers = [];
@@ -50,18 +72,20 @@ for (let i = 0; i < 4; i++) {
   let parent = randomFrom(feelings_words);
   let mover = document.createElement('div');
   mover.innerHTML = parent.innerHTML;
-  mover.style.opacity = 0.5;
+  mover.style.opacity = 1;
   mover.style.position = 'absolute';
   document.body.appendChild(mover);
   movers.push(mover);
 
   let target = randomFrom(feelings_words);
+  while (target == parent) {target = randomFrom(feelings_words);}
 
-  // let mover = movers[i];
-  // i++;
   mover.style.left = parent.offsetLeft + 'px';
   mover.style.top = parent.offsetTop + 'px';
-  mover.style.color = Math.random() < 0.5 ? parent.style.color : colours[colours.indexOf(parent.style.color)+(Math.random() < 0.5 ? 1 : -1)];
+
+  mover.style.color = Math.random() < 0.5 ?
+    parent.style.color : newColour(parent.style.color);
+
 
   let id = null;
   let progress = 0;
@@ -73,10 +97,16 @@ for (let i = 0; i < 4; i++) {
       parent = target;
       target.style.color = mover.style.color;
       target = randomFrom(feelings_words);
+      while (target == parent) {target = randomFrom(feelings_words);} // this will sort out paused ones
+      mover.style.color = Math.random() < 0.5 ?
+        parent.style.color : newColour(parent.style.color);
       progress = 0;
       // clearInterval(id);
     } else {
       progress++;
+      // console.log(i + ' -' + progress);
+      // mover.innerHTML = progress + '/' + duration;
+      //IF TAGRET IS SELF!
       mover.style.top = parent.offsetTop + (target.offsetTop - parent.offsetTop) * (progress / duration) + 'px';
       mover.style.left = parent.offsetLeft + (target.offsetLeft - parent.offsetLeft) * (progress / duration) + 'px';
 

@@ -8,6 +8,7 @@ var FeelerSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   // name: String,
+  picture: String,
   joined: Date,
   admin: Boolean
 });
