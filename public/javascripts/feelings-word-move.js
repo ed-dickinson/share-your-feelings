@@ -1,39 +1,137 @@
 let feelings_words = document.querySelectorAll('.feelings-word');
 
-let colours = ['dodgerblue', 'coral', 'gold', 'pink', 'springgreen'];
+// let colours = ['dodgerblue', 'pink', 'coral', 'gold',  'springgreen'];
+
+let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
+
+const emoColors = {
+  happy : 'gold',
+  anger : 'tomato',
+  sensitive : 'purple',
+  impulsive : 'orange',
+  fresh : 'springgreen',
+  growth : 'green',
+  grief : 'black',
+  sad : 'blue',
+  stable : 'brown', //chocolate
+  loving : 'pink'
+}
+//chocolate, darkgoldenrod, sienna
+//coral, tomato, firebrick, indianred
+//hotpink, lightcoral, lightpink
+//blueviolet, indigo, mediumpurple, orchid, plum
+//darkblue,
+//cadetblue, deepskyblue, lightskyblue
+//darkgreen, darkolivegreen, forestgreen, seagreen
+//limegreen, springgreen, palegreen
+//lightsalmon
+//gold, khaki
+
+let flowers = document.querySelectorAll('.flower');
+
+document.querySelectorAll('.flower').forEach(flower => {
+  flower.style.color = randomFrom(colours);
+});
+
+document.querySelector('.log-in').style.borderColor = randomFrom(colours);
+
 
 function randomFrom(array) {
   return array[Math.floor(Math.random()*array.length)];;
 }
 
+let movers = [];
+
+feelings_words.forEach(word => {
+  word.style.color = randomFrom(colours);
+});
+
+for (let i = 0; i < 4; i++) {
+  let parent = randomFrom(feelings_words);
+  let mover = document.createElement('div');
+  mover.innerHTML = parent.innerHTML;
+  mover.style.opacity = 0.5;
+  mover.style.position = 'absolute';
+  document.body.appendChild(mover);
+  movers.push(mover);
+
+  let target = randomFrom(feelings_words);
+
+  // let mover = movers[i];
+  // i++;
+  mover.style.left = parent.offsetLeft + 'px';
+  mover.style.top = parent.offsetTop + 'px';
+  mover.style.color = Math.random() < 0.5 ? parent.style.color : colours[colours.indexOf(parent.style.color)+(Math.random() < 0.5 ? 1 : -1)];
+
+  let id = null;
+  let progress = 0;
+  let duration = 180 + (i*20);
+  clearInterval(id);
+  id = setInterval(frame, 10);
+  function frame() {
+    if (progress == duration) {
+      parent = target;
+      target.style.color = mover.style.color;
+      target = randomFrom(feelings_words);
+      progress = 0;
+      // clearInterval(id);
+    } else {
+      progress++;
+      mover.style.top = parent.offsetTop + (target.offsetTop - parent.offsetTop) * (progress / duration) + 'px';
+      mover.style.left = parent.offsetLeft + (target.offsetLeft - parent.offsetLeft) * (progress / duration) + 'px';
+
+      mover.style.fontSize = parseInt(window.getComputedStyle(parent).fontSize.slice(0,-2)) + ((parseInt(window.getComputedStyle(target).fontSize.slice(0,-2)) - parseInt(window.getComputedStyle(parent).fontSize.slice(0,-2))) * (progress / duration)) + 'px';
+
+    }
+  }
+
+}
+
+
+
 function moveWords() {
+  if (movers.length == 0) { // create moving words
+    feelings_words.forEach(word => {
+      let mover = document.createElement('div');
+      mover.innerHTML = word.innerHTML;
+      mover.style.opacity = 0.5;
+      mover.style.position = 'absolute';
+      document.body.appendChild(mover);
+      movers.push(mover);
+
+      word.style.color = randomFrom(colours);
+    });
+  };
+
+  let i = 0;
   feelings_words.forEach(word => {
-    word.style.color = randomFrom(colours);
     let target = randomFrom(feelings_words);
-    let mover = document.createElement('div');
-    mover.innerHTML = word.innerHTML;
+
+    let mover = movers[i];
+    i++;
     mover.style.left = word.offsetLeft + 'px';
     mover.style.top = word.offsetTop + 'px';
-    mover.style.color = word.style.color;
-    mover.style.opacity = 0.5;
-    mover.style.position = 'absolute';
-    document.body.appendChild(mover);
+    mover.style.color = Math.random() < 0.3 ? word.style.color : randomFrom(colours);
 
-      let id = null;
-      let progress = 0;
-      clearInterval(id);
-      id = setInterval(frame, 10);
-      function frame() {
-        if (progress == 200) {
-          clearInterval(id);
-        } else {
-          progress++;
-          mover.style.top = word.offsetTop + (target.offsetTop - word.offsetTop) * (progress / 200) + 'px';
-          mover.style.left = word.offsetLeft + (target.offsetLeft - word.offsetLeft) * (progress / 200) + 'px';
-        }
+    let id = null;
+    let progress = 0;
+    clearInterval(id);
+    id = setInterval(frame, 10);
+    function frame() {
+      if (progress == 200) {
+        target.style.color = mover.style.color;
+        clearInterval(id);
+      } else {
+        progress++;
+        mover.style.top = word.offsetTop + (target.offsetTop - word.offsetTop) * (progress / 200) + 'px';
+        mover.style.left = word.offsetLeft + (target.offsetLeft - word.offsetLeft) * (progress / 200) + 'px';
+
+        mover.style.fontSize = parseInt(window.getComputedStyle(word).fontSize.slice(0,-2)) + ((parseInt(window.getComputedStyle(target).fontSize.slice(0,-2)) - parseInt(window.getComputedStyle(word).fontSize.slice(0,-2))) * (progress / 200)) + 'px';
+
       }
+    }
   });
 };
 
-moveWords();
-setInterval(moveWords, 2000);
+// moveWords();
+// setInterval(moveWords, 2000);
