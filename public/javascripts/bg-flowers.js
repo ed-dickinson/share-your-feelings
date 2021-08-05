@@ -1,4 +1,4 @@
-// let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
+let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
 
 
 //chocolate, darkgoldenrod, sienna
@@ -11,6 +11,10 @@
 //limegreen, springgreen, palegreen
 //lightsalmon
 //gold, khaki
+
+function randomFrom(array) {
+  return array[Math.floor(Math.random()*array.length)];;
+}
 
 let flowers = document.querySelectorAll('.flower');
 
@@ -48,4 +52,4 @@ for (let i = 0; i < Math.floor(margin*height*0.0002); i++) {
 console.log();
 // console.log(window.innerHeight + 'x' + window.innerWidth);
 document.querySelectorAll('.random-border').forEach(border => {border.style.borderColor = randomFrom(colours);});
-document.querySelector('.button').style.borderColor = randomFrom(colours);
+// document.querySelector('.button').style.borderColor = randomFrom(colours);

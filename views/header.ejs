@@ -1,6 +1,6 @@
 <header>
   <span class="flowers">
-    <span class="flower">&nbsp;❀</span>
+    <span class="flower">&nbsp;<a href="/" style="text-decoration: none;">❀</a></span>
     <span class="flower">&nbsp;✿</span>
     <span class="flower">&nbsp;❀</span>
     <span class="flower">&nbsp;✿</span>
@@ -9,9 +9,9 @@
 
     <span class=log-in-container">  <br>
 
-      <% if (user) {%>
+      <% if (typeof user !== 'undefined') {%>
           <span class="logged-in random-border">
-            <%= user.username%>
+            <%= (typeof user !== 'undefined') ? user.username : ''%>
           </span>
       <% } else { %>
         <span class="log-in random-border">

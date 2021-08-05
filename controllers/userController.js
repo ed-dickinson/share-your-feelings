@@ -4,7 +4,7 @@ const { body,validationResult } = require('express-validator');
 const passport = require("passport");
 
 exports.sign_up = function(req, res) {
-  res.render('sign_up', {title: 'Sign Up'});
+  res.render('sign_up', {title: 'Sign Up', user: req.user});
 };
 
 // exports.sign_up_post = function(req, res, next) {

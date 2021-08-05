@@ -10,17 +10,25 @@
     <main>
     <!-- <h1><%= title %></h1> -->
     <h1><%= 'Sign Up' %></h1>
-    <p>Welcome aboard. </p>
-    <p>We're so glad to have you. </p>
-    <p>You'll be sharing your feelings with every which, way, and who in no time at all.</p>
 
-    <form action="" method="POST">
-    <label for="username">Just type in what name you'd like to go by:</label>
-    <input name="username" type="text" value="<%=(typeof user !== 'undefined') ? user.username : ''%>"/>
-    <label for="password">And a memorable access password:</label>
-    <input name="password" type="password" />
-    <button>Sign Up</button>
-  </form>
+    <% if (typeof user !== 'undefined') {%>
+        <p>You're already logged in, <%= (typeof user !== 'undefined') ? user.username : ''%>!</p>
+        <p>No need to sign up, my friend.</p>
+    <% } else { %>
+      <p>Welcome aboard. </p>
+      <p>We're so glad to have you. </p>
+      <p>You'll be sharing your feelings with every <u class="fancy-underline random-border">which</u>, <u class="fancy-underline random-border">way</u>, and <u class="fancy-underline random-border">who</u> in no time at all.</p>
+
+      <form action="" method="POST" class="sign-up-form random-border" >
+        <label for="username">Just type in what name you'd like to go by:</label>
+        <input name="username" type="text" value="<%=(typeof user !== 'undefined') ? user.username : ''%>" class="random-border"/><br>
+        <label for="password">And a memorable access password:</label>
+        <input name="password" type="password" class="random-border"/><br>
+        <button class="random-border">Sign Up</button>
+      </form>
+    <% } %>
+
+
     <% if (typeof errors !== 'undefined') { %><p><%=errors.msg%></p> <% } %>
     <% if (typeof message !== 'undefined') { %><p><%=message%></p> <% } %>
 
