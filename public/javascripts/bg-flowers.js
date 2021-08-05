@@ -47,5 +47,5 @@ for (let i = 0; i < Math.floor(margin*height*0.0002); i++) {
 }
 console.log();
 // console.log(window.innerHeight + 'x' + window.innerWidth);
-document.querySelector('.log-in').style.borderColor = randomFrom(colours);
+document.querySelectorAll('.random-border').forEach(border => {border.style.borderColor = randomFrom(colours);});
 document.querySelector('.button').style.borderColor = randomFrom(colours);

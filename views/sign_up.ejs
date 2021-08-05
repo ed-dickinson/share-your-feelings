@@ -21,7 +21,7 @@
     <input name="password" type="password" />
     <button>Sign Up</button>
   </form>
-    <% if (typeof errors !== 'undefined') { %><p><%=errors%></p> <% } %>
+    <% if (typeof errors !== 'undefined') { %><p><%=errors.msg%></p> <% } %>
     <% if (typeof message !== 'undefined') { %><p><%=message%></p> <% } %>
 
     </main>

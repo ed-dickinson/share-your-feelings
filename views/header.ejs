@@ -7,8 +7,27 @@
   </span>
   <div class="title-container">
 
-    <span class="log-in">
-      Log In
+    <span class=log-in-container">  <br>
+
+      <% if (user) {%>
+          <span class="logged-in random-border">
+            <%= user.username%>
+          </span>
+      <% } else { %>
+        <span class="log-in random-border">
+          Log In
+        </span>
+        <span class="log-in-form">
+          <form action="/log-in" method="POST">
+            <!-- <label for="username">U:</label> -->
+            <input name="username" placeholder="username" type="text" class="random-border"/>
+            <!-- <label for="password">P:</label> -->
+            <br><input name="password" placeholder="password" type="password" class="random-border"/>
+            <br><button class="random-border">Log In</button>
+          </form>
+        </span>
+      <% } %>
+      <script src="/javascripts/login-header-script.js"></script>
     </span>
 
   </div>

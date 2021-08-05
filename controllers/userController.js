@@ -1,13 +1,14 @@
-var Feeler = require('../models/feeler');
+var User = require('../models/user');
 
 const { body,validationResult } = require('express-validator');
+const passport = require("passport");
 
 exports.sign_up = function(req, res) {
   res.render('sign_up', {title: 'Sign Up'});
 };
 
 // exports.sign_up_post = function(req, res, next) {
-//   const user = new Feeler({
+//   const user = new User({
 //     username: req.body.username,
 //     password: req.body.password
 //   }).save(err => {
@@ -18,6 +19,11 @@ exports.sign_up = function(req, res) {
 //   })
 // };
 
+exports.log_in_post =  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/"
+  });
+
 exports.sign_up_post = [
 
   body('username', 'You need a username!').trim().isLength({min:1}).escape(),
@@ -26,7 +32,7 @@ exports.sign_up_post = [
 
     const errors = validationResult(req);
 
-    const user = new Feeler({
+    const user = new User({
       username: req.body.username,
       password: req.body.password
     });
@@ -35,17 +41,17 @@ exports.sign_up_post = [
       res.render('sign_up', {title: 'Sign Up', user: user, errors: errors.array()});
       return;
     } else {
-      Feeler.findOne({'username':req.body.username})
-      .exec(function(err, found_feeler) {
+      User.findOne({'username':req.body.username})
+      .exec(function(err, found_user) {
         if (err) {return next(err);}
-        if (found_feeler) {
-          // res.redirect('feeler' + found_feeler.url);
+        if (found_user) {
+          // res.redirect('user' + found_user.url);
           // user.username = '';
           res.render('sign_up', {title: 'Sign Up', user: user, message: "Sorry, there's already someone who goes by this name. Please choose another:", errors: errors.array()});
         } else {
           user.save(function (err) {
             if (err) {return next(err);}
-            res.redirect('feeler' + user.url);
+            res.redirect('user' + user.url);
           });
         }
       });
@@ -59,6 +65,6 @@ exports.sign_up_post = [
   }
 ];
 
-exports.feeler_page = function(req, res) {
+exports.user_page = function(req, res) {
   res.send('not imp:' + req.params.id);
 };

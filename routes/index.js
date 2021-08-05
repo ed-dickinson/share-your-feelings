@@ -1,16 +1,26 @@
 var express = require('express');
 var router = express.Router();
 
-var feeler_controller = require('../controllers/feelerController');
+var user_controller = require('../controllers/userController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Share Your Feelings' });
+  res.render('index', { title: 'Share Your Feelings', user: req.user });
 });
 
-router.get('/sign-up', feeler_controller.sign_up);
-router.post('/sign-up', feeler_controller.sign_up_post);
+// router.post(
+//   "/log-in",
+//   passport.authenticate("local", {
+//     successRedirect: "/",
+//     failureRedirect: "/"
+//   })
+// );
 
-router.get('/feeler/:id', feeler_controller.feeler_page);
+router.get('/sign-up', user_controller.sign_up);
+router.post('/sign-up', user_controller.sign_up_post);
+
+router.post('/log-in', user_controller.log_in_post);
+
+router.get('/user/:id', user_controller.user_page);
 
 module.exports = router;

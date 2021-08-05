@@ -56,15 +56,27 @@ h1 {font-weight: 900; font-size: 2em;}
 
 hr {border: none; border-bottom: 2px dotted coral; }
 
-.log-in {border: 2px solid coral; padding: 2px 4px; cursor: pointer; border-radius: 6px; position: relative; box-shadow: 0px 2px 2px gray; transition: 0.2s;}
-.log-in:hover {box-shadow: 0px 0px 2px gray; top: 2px;}
+.log-in, .logged-in {border: 2px solid coral; padding: 2px 4px; cursor: pointer; border-radius: 6px; position: relative; box-shadow: 0px 2px 2px gray; transition: 0.2s; position: absolute; right: 0; top: 0px;}
+.log-in:hover, .logged-in:hover {box-shadow: 0px 0px 2px gray; top: 2px;}
 
-.log-in:active {top: 4px;}
+.log-in:active, .logged-in:active {top: 4px;}
 
-.button {border: 2px solid coral; padding: 2px 4px; cursor: pointer; border-radius: 6px; position: relative; box-shadow: 0px 2px 2px gray; transition: 0.2s;}
-.button:hover {box-shadow: 0px 0px 2px gray; top: 2px;}
+button {font: inherit; background-color: white;}
+button, .button {border: 2px solid coral; padding: 2px 4px; cursor: pointer; border-radius: 6px; position: relative; box-shadow: 0px 2px 2px gray; transition: 0.2s;}
+button:hover, .button:hover {box-shadow: 0px 0px 2px gray; top: 2px;}
 
-.button:active {top: 4px;}
+button:active, .button:active {top: 4px;}
+
+.log-in-form input {border: 2px solid coral; padding: 2px 4px; border-radius: 6px; box-shadow: 0px 1px 2px gray; font: inherit; }
+
+.log-in-form input, .log-in-form button {margin-top: 4px;}
+
+.log-in-form {display: none; position: absolute; right: 0; top: 0;}
+
+
+
+/* .log-in-container {min-height: 1em;} */
+
 
 a.button {color: black; text-decoration: none;}
 

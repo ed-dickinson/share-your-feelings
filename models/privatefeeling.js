@@ -8,8 +8,8 @@ var PrivateFeelingSchema = new Schema({
   message: String,
   color: String,
   date: Date,
-  feeler: {type: Schema.Types.ObjectId, ref: 'Feeler'},
-  feelee: {type: Schema.Types.ObjectId, ref: 'Feeler'}
+  feeler: {type: Schema.Types.ObjectId, ref: 'User'},
+  feelee: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 PrivateFeelingSchema
