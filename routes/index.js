@@ -21,6 +21,8 @@ router.post('/sign-up', user_controller.sign_up_post);
 
 router.post('/log-in', user_controller.log_in_post);
 
+router.get('/you', user_controller.you_get);
+
 router.get('/log-out', user_controller.log_out_get);
 
 router.get('/user/:id', user_controller.user_page);

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('head'); %>
+
+  </head>
+  <body>
+    <% let logoutswitch = true; %>
+    <%- include('header'); %>
+    <main>
+    <h1><%= title %></h1>
+
+    <span class='avatar'></span>
+
+    <% if (user.joined) { %>
+    <p>Joined on <%=user.joined.toLocaleDateString()%>.</p>
+    <% } %>
+
+    <% if (user.friends > 0) { %>
+    <p>Your friends: <%=user.friends%>.</p>
+    <p>Send a feeling out into the world:</p>
+    <% } else { %>
+    <p>You don't have any friends yet!</p>
+    <p>Why not open up to this random person?</p>
+    <p>Or send some feelings out into the world:</p>
+    <% } %>
+
+
+    <br><br><hr><br>
+    </main>
+    <script src="/javascripts/bg-flowers.js"></script>
+    <script>
+      let loggedIn = document.querySelector('.logged-in');
+      loggedIn.setAttribute('href', '/log-out');
+      loggedIn.innerHTML = 'Log Out';
+    </script>
+  </body>
+</html>

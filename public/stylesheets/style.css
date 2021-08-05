@@ -81,6 +81,21 @@ button:active, .button:active {top: 4px;}
 /* .log-in-container {min-height: 1em;} */
 
 
+/* LOG OUT */
+
+.waving-hand {animation: wave alternate ease-in-out 0.5s infinite 0s; display:inline-block; position: relative; font-size: 2em;}
+
+@keyframes wave {
+  from {
+    transform: rotate(-10deg);
+  }
+
+  to {
+    transform: rotate(10deg);
+  }
+}
+
+
 a.button {color: black; text-decoration: none;}
 
 svg path {fill: none; stroke: coral; width: 120px; stroke-width: 2px; overflow-visible;}
@@ -90,7 +105,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 }
 
 .public-feeling {border-radius: 6px;
-  border: 2px solid coral; border-width: 2px 2px 0 2px; border-radius: 6px 6px 6px 0 ; display: inline-block; padding: 2px 4px; position: relative; border-left:;
+  border: 2px solid coral; border-width: 2px 2px 0 2px; border-radius: 10px 10px 10px 0 ; display: inline-block; padding: 8px 10px; position: relative; border-left:;
 
   }
 
@@ -107,3 +122,8 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 /* .public-feeling-msg::after {content:'';position: absolute; top: 2px; width: 1px; border-color: inherit;   height: calc(100% - 2px);} */
 
 /* .public-feeling {border-radius: 6px; border-top: 2px solid coral;} */
+
+
+/* // PROFILE  */
+
+.avatar {height: 150px; width: 150px; background-color: blanchedalmond; display: inline-block; position: relative; float: right; top: -3em; border-radius: 50%;}

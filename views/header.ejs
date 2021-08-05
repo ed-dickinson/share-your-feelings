@@ -10,8 +10,8 @@
     <span class=log-in-container">  <br>
 
       <% if (typeof user !== 'undefined') {%>
-          <span class="logged-in random-border">
-            <%= (typeof user !== 'undefined') ? user.username : ''%>
+          <span class=""><!--was logged-in randomborder-->
+            <a class='logged-in button random-border' href='/you'><%= (typeof user !== 'undefined') ? user.username : ''%></a>
           </span>
       <% } else { %>
         <span class="log-in random-border">
