@@ -19,10 +19,19 @@ exports.sign_up = function(req, res) {
 //   })
 // };
 
+// function fleshOut(date) {
+//   return date.length == 1 ? '0' + date.length : date.length;
+// }
+
 exports.log_in_post =  passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/"
   });
+
+  exports.log_out_get = (req, res) => {
+    req.logout();
+    res.redirect('/');
+  };
 
 exports.sign_up_post = [
 
@@ -32,9 +41,15 @@ exports.sign_up_post = [
 
     const errors = validationResult(req);
 
+    // let date = new Date();
+    //
+    // let formattedDate = date.getFullYear() + '-' + fleshOut(date.getMonth()) + '-' + fleshOut(date.getDate());
+
     const user = new User({
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      //joined: req.body.joined //2021-08-05T00:00:00.000+00:00
+      joined: req.body.joined
     });
 
     if (!errors.isEmpty()) {

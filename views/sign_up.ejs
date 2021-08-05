@@ -20,10 +20,12 @@
       <p>You'll be sharing your feelings with every <u class="fancy-underline random-border">which</u>, <u class="fancy-underline random-border">way</u>, and <u class="fancy-underline random-border">who</u> in no time at all.</p>
 
       <form action="" method="POST" class="sign-up-form random-border" >
+
         <label for="username">Just type in what name you'd like to go by:</label>
         <input name="username" type="text" value="<%=(typeof user !== 'undefined') ? user.username : ''%>" class="random-border"/><br>
         <label for="password">And a memorable access password:</label>
         <input name="password" type="password" class="random-border"/><br>
+        <input name="joined" type="date" class="hiddenfield" value="<%let date = new Date();%><%=date.getFullYear() + '-' + (date.getMonth().toString().length==1?'0'+(date.getMonth()+1):date.getMonth()+1) + '-' + (date.getDate().toString().length==1?'0'+date.getDate():date.getDate()+1);%>"/>
         <button class="random-border">Sign Up</button>
       </form>
     <% } %>

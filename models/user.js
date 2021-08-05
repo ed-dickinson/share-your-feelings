@@ -10,7 +10,8 @@ var UserSchema = new Schema({
   // name: String,
   picture: String,
   joined: Date,
-  admin: Boolean
+  admin: Boolean,
+  friends: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 UserSchema
