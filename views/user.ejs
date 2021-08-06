@@ -18,9 +18,9 @@
     <p>Joined on <%=other_user.joined.toLocaleDateString()%>.</p>
     <% } %>
 
-    <%= other_user %>
+    <!-- <%= other_user %> -->
 
-    <br>You:<%= user %>
+    <!-- <br>You:<%= user._id %> -->
 
     <% if (user.friends.includes(other_user._id)) { %>
       <p>&#x1F44D; Lovely, this user is in your contacts list.</p>
@@ -48,13 +48,15 @@
       <button class="send-button">Send</button>
     </form>
 
+    <br>
+
     <% messages.forEach(message => { %>
-      <!-- <%=message%> -->
-      <div class="message-cont <%=message.user=user._id ? 'right-align' : ''%>">
+      <!-- <%=message.user.id%> -->
+      <div class="message-cont <%=message.user.id==user._id ? 'right-align' : ''%>">
         <span class="message" style="border-color: <%=message.color%>">
           <div class="message-text"><%=message.message%></div>
           <div class="message-author"><strong><%=message.user.username%></strong></div>
-          <div class="message-time"><%=message.date.toLocaleTimeString()%> <%=message.date.toLocaleDateString()%></div>
+          <div class="message-time"><%=message.date.toLocaleDateString()%></div>
         </span>
       </div>
     <% }); %>
@@ -64,5 +66,12 @@
     </main>
     <script src="/javascripts/bg-flowers.js"></script>
     <script src="/javascripts/emotion-button.js"></script>
+    <script>
+    //fix html enitities
+    document.querySelectorAll('.message-text').forEach(message => {
+      let str = message.innerHTML;
+      message.innerHTML = str.replace(/&amp;/g, "&");
+    });
+    </script>
   </body>
 </html>

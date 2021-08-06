@@ -131,7 +131,10 @@ exports.user_page = function(req, res, next) {
         },
 
         function(other_user, callback) {
-            PrivateFeeling.find({ $or: [{'receipient' : other_user.id},{'user' : other_user.id}]})
+            PrivateFeeling.find({
+              $or: [{'receipient' : other_user.id,'user' : req.user.id},
+              {'receipient' : req.user.id,'user' : other_user.id}]
+            })
               .populate('user', 'username')
               .exec(
                 function(err, messages){
@@ -163,7 +166,7 @@ exports.add_post = function(req, res, next) {
   //   res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
   // });
 
-  req.user.friends.push(req.body.id);
+  req.user.friends.unshift(req.body.id);
 
   req.user.save(function (err) {
     if (err) { return next(err); }
