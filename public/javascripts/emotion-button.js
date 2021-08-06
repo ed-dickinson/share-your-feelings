@@ -61,6 +61,8 @@ let emotionButton = document.querySelector('.emotion-button');
 
 let sendButton = document.querySelector('.send-button');
 
+let emotionValue = document.querySelector('.msg-color');
+
 // emotion
 
 function changeEmotion() {
@@ -68,6 +70,7 @@ function changeEmotion() {
   emotionButton.innerHTML = emotions[index].emotion;
   messageBox.style.borderColor = emotions[index].color;
   sendButton.style.borderColor = emotions[index].color;
+  emotionValue.setAttribute('value', emotions[index].color);
   index++;
   if (index == emotions.length) {index=0;}
 }

@@ -57,3 +57,5 @@ document.querySelectorAll('.random-border').forEach(border => {border.style.bord
 let avatar = document.querySelector('.avatar');
 avatar.style.opacity = 0.25;
 avatar.style.backgroundColor = randomFrom(colours);
+
+document.querySelectorAll('.contact-avatar').forEach(avatar => {avatar.style.backgroundColor = randomFrom(colours);});

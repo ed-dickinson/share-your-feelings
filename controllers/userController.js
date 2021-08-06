@@ -16,7 +16,18 @@ exports.log_in_post =  passport.authenticate("local", {
   });
 
 exports.you_get = function(req, res) {
-  res.render('you', {title: req.user.username, user: req.user});
+  // res.render('you', {title: req.user.username, user: req.user});
+  User.findById(req.user._id)
+    .populate('friends')
+    .exec(function(err, user) {
+      if (err) {return next(err);}
+      if (user==null) {
+        var err = new Error('User not found!');
+        err.status = 404;
+        return next(err);
+      }
+      res.render('you', {title: req.user.username, user: req.user, friends: user.friends});
+    })
 };
 
 exports.log_out_get = (req, res) => {
@@ -75,7 +86,9 @@ exports.sign_up_post = [
                 joined: req.body.joined//2021-08-05T00:00:00.000+00:00
               }).save(err => {
                 if (err) return next(err)
-                res.redirect('user/' + req.body.username);
+                // res.redirect('user/' + req.body.username);
+                res.render('welcome', {title: req.body.username, username: req.body.username});
+
               })
             };
           });
@@ -118,8 +131,8 @@ exports.user_page = function(req, res, next) {
         },
 
         function(other_user, callback) {
-            PrivateFeeling.find({ 'receipient' : other_user.id})
-              .populate()
+            PrivateFeeling.find({ $or: [{'receipient' : other_user.id},{'user' : other_user.id}]})
+              .populate('user', 'username')
               .exec(
                 function(err, messages){
                   callback(null, {messages, other_user});
@@ -144,10 +157,17 @@ exports.user_page = function(req, res, next) {
 };
 
 exports.add_post = function(req, res, next) {
-  User.findByIdAndUpdate(req.user._id, {'friends' : req.user.friends.push(req.body.id)}, {}, function(err, other_user){
-    if (err) {return next(err);}
+  // User.findById(req.user._id, {'friends' : req.user.friends.push(req.body.id)}, {}, function(err, other_user){
+  //   if (err) {return next(err);}
+  //
+  //   res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
+  // });
 
-    res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
+  req.user.friends.push(req.body.id);
+
+  req.user.save(function (err) {
+    if (err) { return next(err); }
+    res.redirect('user/' + req.body.username);
   });
 };
 
@@ -168,7 +188,7 @@ exports.message_post = [
       }
     );
 
-    req.user.messages.push(message._id);
+    req.user.messages.unshift(message._id);
 
     if (!errors.isEmpty()) {
       res.render('user', {title: other_user.username, other_user: other_user, user: req.user, errors: errors.array()});
@@ -205,20 +225,19 @@ exports.message_post = [
 
       async.parallel({
         message: function(callback) {
-          message.save(function(callback) {});
+          message.save(function(err) {
+            callback(err);
+          });
         },
         user: function(callback) {
-          req.user.save(function(callback) {});
+          req.user.save(function(err) {
+            callback(err);
+          });
         },
       }, function (err,results) {
         if (err) { return next(err); }
         res.redirect('user/' + req.body.receipient);
-      }) // why is this hanging
-
-      // message.save(function (err) {
-      //   if (err) { return next(err); }
-      //   res.redirect('user/' + req.body.receipient);
-      // });
+      })
 
        // message.save(function (err) {
        //   if (err) { return next(err); }

@@ -129,6 +129,30 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 
 .avatar {height: 150px; width: 150px; background-color: blanchedalmond; display: inline-block; position: relative; float: right; top: -3em; border-radius: 50%;}
 
+.gen-border {box-shadow: 0px 1px 2px gray; border: 2px solid coral; border-radius: 10px;  }
+
+.contact-book {border-radius: 12px; display: inline-block; padding: 10px;}
+
+.contact {display: block; padding: 6px 10px; box-shadow: 0px 1px 2px gray; border-radius: 10px; border: 2px solid coral; margin: 10px;}
+
+.contact-avatar {width: 50px; height: 50px; display: inline-block; border-radius: 50%;}
+
+.contact-name, .contact-avatar {display: inline-block; }
+.contact-name {top: calc(-25px + 0.5em); position: relative; padding-left: 10px;}
+
+.contact {border: 2px solid coral;  cursor: pointer; border-radius: 6px; position: relative; box-shadow: 0px 2px 2px gray; transition: 0.2s; color: black;}
+.contact:hover {box-shadow: 0px 0px 2px gray; left: 1px;}
+
+.contact:active {top: 3px;}
+
+.contact-ring {position: relative;}
+.contact-ring::after, .contact-ring::before {content: ''; position: absolute; border-radius: 50%; border: 1.5px solid black; height: 20px; width: 20px; border-right-color: transparent; transform: rotate(45deg); left: -24px;}
+.contact-ring::after {top: 0px;} .contact-ring::before {top: 38px;}
+
+
+
+
+
 /* USER */
 
 .message-form textarea {border: 2px solid coral; padding: 2px 4px; border-radius: 6px; box-shadow: 0px 1px 2px gray; font: inherit; width: 100%; height: 5em;}

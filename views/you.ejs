@@ -19,14 +19,22 @@
     <p>Joined on <%=user.joined.toLocaleDateString()%>.</p>
     <% } %>
 
-    <% if (user.friends > 0) { %>
-    <p>Your friends: <%=user.friends%>.</p>
-    <p>Send a feeling out into the world:</p>
+    <p>Add your email? (So we can let you know if you have a message. No funny business, that's a promise.)</p>
+    <p>Or add a profile pic? &#9758;</p>
+
+    <% if (user.friends.length > 0) { %>
+    <p>Your contact book: </p>
+    <span class="contact-book gen-border random-border" >
+      <% friends.forEach(friend => { %>
+        <a href="user/<%=friend.username%>"><div class="contact-ring"></div><div class="contact random-border"><span class="contact-avatar"></span><span class="contact-name"><strong><%=friend.username%></strong></span></div></a>
+      <% }); %>
+    </span>
+    <!-- <p>Send a feeling out into the world:</p> -->
     <% } else { %>
     <p>You don't have any friends yet!</p>
     <p>Why not open up to this random crumb?</p>
     <p><a href='user/crumb' class='button random-border'>crumb</a></p>
-    <p>Or send some feelings out into the world:</p>
+    <!-- <p>Or send some feelings out into the world:</p> -->
     <% } %>
 
 
