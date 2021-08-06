@@ -6,6 +6,20 @@ const { body,validationResult } = require('express-validator');
 const passport = require("passport");
 const bcrypt = require('bcryptjs');
 
+require('dotenv').config()
+const DBkey = process.env.DB_URL;
+const nodeMailer = require('nodemailer');
+var transporter = nodeMailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465, //587 for false
+    secure:true,
+    requireTLS:true,
+    auth: {
+      user: 'someonesharedafeeling@gmail.com',
+      pass: process.env.GMAIL_PASSWORD
+    }
+  });
+
 exports.sign_up = function(req, res) {
   res.render('sign_up', {title: 'Sign Up', user: req.user});
 };
@@ -17,17 +31,23 @@ exports.log_in_post =  passport.authenticate("local", {
 
 exports.you_get = function(req, res) {
   // res.render('you', {title: req.user.username, user: req.user});
-  User.findById(req.user._id)
-    .populate('friends')
-    .exec(function(err, user) {
-      if (err) {return next(err);}
-      if (user==null) {
-        var err = new Error('User not found!');
-        err.status = 404;
-        return next(err);
-      }
-      res.render('you', {title: req.user.username, user: req.user, friends: user.friends});
-    })
+  if (typeof req.user != 'undefined') {
+
+    User.findById(req.user._id)
+      .populate('friends')
+      .exec(function(err, user) {
+        if (err) {return next(err);}
+        if (user==null) {
+          var err = new Error('User not found!');
+          err.status = 404;
+          return next(err);
+        }
+        res.render('you', {title: req.user.username, user: req.user, friends: user.friends});
+      })
+
+  } else {
+    res.render('sorry', {message: 'You have to be logged in to see yourself.'});
+  }
 };
 
 exports.log_out_get = (req, res) => {
@@ -120,6 +140,7 @@ exports.user_page = function(req, res, next) {
   //   res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
   // });
 
+if (typeof req.user != 'undefined') {
   async.waterfall([
         function(callback) {
             User.findOne({ 'username': req.params.username })
@@ -155,6 +176,9 @@ exports.user_page = function(req, res, next) {
 
     });
 
+  } else {
+    res.render('sorry', {message: 'Users are only visible to other users.'});
+  }
 
 
 };
@@ -171,6 +195,21 @@ exports.add_post = function(req, res, next) {
   req.user.save(function (err) {
     if (err) { return next(err); }
     res.redirect('user/' + req.body.username);
+  });
+};
+
+exports.add_email_post = function(req, res, next) {
+
+  // User.findByIdAndUpdate(req.user._id, {'email' : req.body.email}, {}, function(err){
+  //       if (err) { return next(err); }
+  //       res.redirect('you');
+  //   });
+
+  req.user.email = req.body.email;
+
+  req.user.save(function (err) {
+    if (err) { return next(err); }
+    res.redirect('you');
   });
 };
 
@@ -239,7 +278,43 @@ exports.message_post = [
         },
       }, function (err,results) {
         if (err) { return next(err); }
-        res.redirect('user/' + req.body.receipient);
+
+        // let mailOptions = {
+        //   from: 'someonesharedafeeling@gmail.com',
+        //   to: 'edward.ejd@gmail.com',
+        //   subject: 'Someone shared a feeling with you!',
+        //   html: req.user.username + ' has shared a feeling with you. <a href="">Read it here</a>.'
+        // };
+        // transporter.sendMail(mailOptions, function(error, info){
+        //   if (error) {
+        //     console.log(error);
+        //   } else {
+        //     console.log('Email was sent successfully: ' + info.response);
+        //   }
+        //   res.redirect('user/' + req.body.receipient);
+        // });
+
+        if (req.body.email) {
+          let mailOptions = {
+            from: 'someonesharedafeeling@gmail.com',
+            to:req.body.email,
+            subject: 'Someone shared a feeling with you!',
+            html: 'Hello, hello, hello!<br><strong>' + req.user.username + '</strong> has shared a feeling with you. <a href="http://">Read it here</a>.'
+          };
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email was sent successfully: ' + info.response);
+            }
+            res.redirect('user/' + req.body.receipient);
+          })
+        } else {
+          res.redirect('user/' + req.body.receipient);
+        }
+
+
+
       })
 
        // message.save(function (err) {

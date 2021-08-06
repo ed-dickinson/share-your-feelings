@@ -11,6 +11,7 @@
     <main>
     <!-- <h1><%= title %></h1> -->
     <h1><span class='bouncing-hand'>&#x1f44d;</span></h1>
+    <p>Hello, <strong style='font-size: 2em;'><%=user.username%></strong></p>
     <p>That's you logged in, my friend!</p>
 
     <span class='avatar'></span>
@@ -19,7 +20,22 @@
     <p>Joined on <%=user.joined.toLocaleDateString()%>.</p>
     <% } %>
 
-    <p>Add your email? (So we can let you know if you have a message. No funny business, that's a promise.)</p>
+    <% if (user.email) { %>
+      <p>e-mail: <%=user.email%></p>
+    <% } else { %>
+      <p class="add-email"><span class='button add-email-button'>Add your email?</span>
+        <form action="/add_email" method="POST" class="email-form random-border" style="display:none">
+          <input hidden name="id" type="text" value="<%=user._id%>"/>
+          <input name="email" type="text" class='random-border'/>
+          <button class="random-border">Add</button>
+        </form>
+
+
+      </p>
+
+
+      <p>(Only so we can let you know if you have a message. No funny business, that's a promise.)</p>
+    <% } %>
     <p>Or add a profile pic? &#9758;</p>
 
     <% if (user.friends.length > 0) { %>
@@ -45,6 +61,13 @@
       let loggedIn = document.querySelector('.logged-in');
       loggedIn.setAttribute('href', '/log-out');
       loggedIn.innerHTML = 'Log Out';
+
+      function showEmailForm() {
+        emailButton.style.display = 'none';
+        document.querySelector('.email-form').style.display = 'inline';
+      };
+      let emailButton = document.querySelector('.add-email-button');
+      emailButton.addEventListener('click', showEmailForm);
     </script>
   </body>
 </html>

@@ -11,6 +11,7 @@ var UserSchema = new Schema({
   picture: String,
   joined: Date,
   admin: Boolean,
+  email: String,
   friends: [{type: Schema.Types.ObjectId, ref: 'User'}]
   , messages: [{type: Schema.Types.ObjectId, ref: 'PrivateFeeling'}]
 });
