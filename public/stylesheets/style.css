@@ -84,15 +84,16 @@ button:active, .button:active {top: 4px;}
 /* LOG OUT */
 
 .waving-hand {animation: wave alternate ease-in-out 0.5s infinite 0s; display:inline-block; position: relative; font-size: 2em;}
+.still-hand, .bouncing-hand {font-size: 2em;}
+.bouncing-hand {animation: bounce alternate ease-in-out 0.3s infinite 0s; display:inline-block; position: relative;}
 
 @keyframes wave {
-  from {
-    transform: rotate(-10deg);
-  }
-
-  to {
-    transform: rotate(10deg);
-  }
+  from {  transform: rotate(-10deg);  }
+  to {    transform: rotate(10deg);   }
+}
+@keyframes bounce {
+  from {  top: 0px;  }
+  to {    top: -8px;   }
 }
 
 

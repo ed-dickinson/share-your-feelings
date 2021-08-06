@@ -6,10 +6,12 @@
 
   </head>
   <body>
-    <% let logoutswitch = true; %>
+
     <%- include('header'); %>
     <main>
-    <h1><%= title %></h1>
+    <!-- <h1><%= title %></h1> -->
+    <h1><span class='bouncing-hand'>&#x1f44d;</span></h1>
+    <p>That's you logged in, my friend!</p>
 
     <span class='avatar'></span>
 
@@ -22,7 +24,8 @@
     <p>Send a feeling out into the world:</p>
     <% } else { %>
     <p>You don't have any friends yet!</p>
-    <p>Why not open up to this random person?</p>
+    <p>Why not open up to this random crumb?</p>
+    <p><a href='user/crumb' class='button random-border'>crumb</a></p>
     <p>Or send some feelings out into the world:</p>
     <% } %>
 

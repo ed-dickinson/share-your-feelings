@@ -49,7 +49,7 @@ exports.sign_up_post = [
     if (!errors.isEmpty()) {
       res.render('sign_up', {title: 'Sign Up',
       // user: user,
-      message: "Something's amiss. Please note passwords must contain at least 4 characters.",
+      message: "Please note passwords must contain at least 4 characters.",
       errors: errors.array()});
       return;
     } else {
@@ -93,6 +93,30 @@ exports.sign_up_post = [
   }
 ];
 
-exports.user_page = function(req, res) {
-  res.send('not imp:' + req.params.id);
+exports.user_page = function(req, res, next) {
+  User.findOne({'username' : req.params.username})
+  .populate({
+    path: 'friends'
+    ,match: { id:  req.user._id  }
+    // Explicitly exclude `_id`, see http://bit.ly/2aEfTdB
+    // select: 'name -_id'
+  })
+  .exec(function(err, other_user){
+    if (err) {return next(err);}
+    if (other_user==null) {
+      var err = new Error('No user by this name: ' + req.params.username + '.');
+      err.status = 404;
+      return next(err);
+    }
+    res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
+  });
+
 };
+
+exports.add_post = function(req, res, next) {
+  User.findByIdAndUpdate(req.user._id, {'friends' : [req.body.id]}, {}, function(err, other_user){
+    if (err) {return next(err);}
+
+    res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
+  });
+  };

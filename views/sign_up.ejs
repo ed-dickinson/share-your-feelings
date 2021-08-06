@@ -9,18 +9,20 @@
     <%- include('header'); %>
     <main>
     <!-- <h1><%= title %></h1> -->
-    <h1><%= 'Sign Up' %></h1>
+
 
     <% if (typeof user !== 'undefined') {%>
         <p>You're already logged in, <%= (typeof user !== 'undefined') ? user.username : ''%>!</p>
         <p>No need to sign up, my friend.</p>
     <% } else { %>
       <% if (typeof message !== 'undefined') { %>
-        <p>&#x2639;</p>
-        <p>Sorry!</p>
+        <h1><span class='still-hand'>&#x1f91e;</span></h1>
+        <p>Uh oh!</p>
+        <p>Something went wrong, let's hope it works this time.</p>
         <p><%=message%></p>
       <% } else { %>
-        <p>Welcome aboard. </p>
+        <h1><span class='waving-hand'>&#x270B;</span></h1>
+        <p>Hello! And welcome aboard. </p>
         <p>We're so glad to have you. </p>
         <p>You'll be sharing your feelings with every <u class="fancy-underline random-border">which</u>, <u class="fancy-underline random-border">way</u>, and <u class="fancy-underline random-border">who</u> in no time at all.</p>
       <% } %>

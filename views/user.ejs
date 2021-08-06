@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('head'); %>
+
+  </head>
+  <body>
+    <%- include('header'); %>
+    <main>
+    <h1><%= title %></h1>
+
+    <span class='avatar'></span>
+
+    <% if (other_user.joined) { %>
+    <p>Joined on <%=other_user.joined.toLocaleDateString()%>.</p>
+    <% } %>
+
+    <%= other_user %>
+
+    <br>You:<%= user %>
+
+    <% if (user.friends.includes(other_user._id)) { %>
+      <p>&#x1F44D; Lovely, this user is in your contacts list.</p>
+      <p>But you haven't shared any feelings with them, why not open up?</p>
+    <% } else { %>
+
+      <p>This user is not in your contact list!</p>
+      <!-- <p><a class='button random-border'>Add them?</a></p> -->
+      <form action="/add" method="POST" class="add-form random-border" >
+        <input name="id" type="text" class="hidden-field" value="<%=other_user._id%>"/>
+        <button class="random-border">Add them?</button>
+      </form>
+    <% } %>
+
+
+    <br><br><hr><br>
+    </main>
+    <script src="/javascripts/bg-flowers.js"></script>
+  </body>
+</html>
