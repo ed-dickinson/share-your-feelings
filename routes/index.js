@@ -23,6 +23,8 @@ router.post('/log-in', user_controller.log_in_post);
 
 router.post('/add', user_controller.add_post);
 
+router.post('/message', user_controller.message_post);
+
 router.get('/you', user_controller.you_get);
 
 router.get('/log-out', user_controller.log_out_get);

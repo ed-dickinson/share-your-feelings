@@ -12,6 +12,8 @@
 
     <span class='avatar'></span>
 
+
+
     <% if (other_user.joined) { %>
     <p>Joined on <%=other_user.joined.toLocaleDateString()%>.</p>
     <% } %>
@@ -23,6 +25,14 @@
     <% if (user.friends.includes(other_user._id)) { %>
       <p>&#x1F44D; Lovely, this user is in your contacts list.</p>
       <p>But you haven't shared any feelings with them, why not open up?</p>
+      <form action="/message" method="POST" class="message-form random-border" >
+        <textarea name="message" type="textarea" class="message-box random-border" placeholder="..." required="true"/></textarea>
+        <input name="id" type="text" class="hidden-field" value="<%=other_user._id%>"/>
+        <input name="color" type="text" class="hidden-field" value="springgreen"/>
+        <input hidden name="receipient" value="<%=other_user.username%>"/>
+
+        <button class="random-border">Send</button>
+      </form>
     <% } else { %>
 
       <p>This user is not in your contact list!</p>
@@ -32,6 +42,17 @@
         <button class="random-border">Add them?</button>
       </form>
     <% } %>
+
+    <% messages.forEach(message => { %>
+      <!-- <%=message%> -->
+      <div class="message-cont <%=message.user=user._id ? 'right-align' : ''%>">
+        <span class="message" style="border-color: <%=message.color%>">
+          <div class="message-text"><%=message.message%></div>
+          <div class="message-author"><%=message.user%></div>
+          <div class="message-time"><%=message.date.toLocaleTimeString()%> <%=message.date.toLocaleDateString()%></div>
+        </span>
+      </div>
+    <% }); %>
 
 
     <br><br><hr><br>
