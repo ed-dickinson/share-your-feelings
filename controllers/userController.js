@@ -40,6 +40,7 @@ exports.sign_up = function(req, res) {
 
 exports.log_in_post =  passport.authenticate("local", {
     successRedirect: "/you",
+    // successRedirect: req.protocol,
     failureRedirect: "/"
   });
 
@@ -253,7 +254,7 @@ exports.message_post = [
             from: 'someonesharedafeeling@gmail.com',
             to:req.body.email,
             subject: 'Someone shared a feeling with you!',
-            html: 'Hello, hello, hello!<br><strong>' + req.user.username + '</strong> has shared a feeling with you. <a href="http://">Read it here</a>.'
+            html: 'Hello, hello, hello!<br><strong>' + req.user.username + '</strong> has shared a feeling with you. <a href="https://share-your-feelings.herokuapp.com/user/'+ req.body.receipient +'">Read it here</a>.'
           };
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {

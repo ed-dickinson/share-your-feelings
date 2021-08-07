@@ -72,3 +72,11 @@ if (window.innerWidth <= 500){
     flower.innerHTML = '&nbsp;&#x1f33c;';
   })
 }
+
+document.querySelectorAll('.message-text').forEach(message => {
+  if (message.innerHTML.length < 200) {
+    message.style.maxWidth = '300px';
+  } else if (message.innerHTML.length < 300) {
+    message.style.maxWidth = '400px';
+  }
+});

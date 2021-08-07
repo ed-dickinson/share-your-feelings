@@ -20,3 +20,7 @@ function showPhotoForm() {
 if (photoButton) {
   photoButton.addEventListener('click', showPhotoForm);
 }
+
+document.querySelectorAll('.message-text').forEach(message => {
+  console.log(message.length);
+})
