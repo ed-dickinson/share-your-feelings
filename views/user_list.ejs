@@ -16,11 +16,13 @@
 
     <% users.forEach(user => { %>
       <span class="user-list-user">
+        <a href="/user/<%=user.username%>">
       <% if (user.picture) {%>
         <div class="avatar avatar-user-list avatar-present" style="background-image: url('/uploads/<%=user.picture%>')"></div>
       <% } else { %>
         <div class="avatar avatar-user-list avatar-empty"></div>
       <% } %>
+        </a>
 
       <a class="button random-border" href="/user/<%=user.username%>"><span class="user-list-username"><%=user.username%></span></a>
     </span>

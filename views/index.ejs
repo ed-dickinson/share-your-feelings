@@ -20,8 +20,14 @@
     <p>So go ahead! <div class="front-page-right">Share Your <span class="feelings-word">Feelings</span>.</div></p>
     <p>You'll feel better when you...</p><p class="front-page-right">Share Your <span class="feelings-word">Feelings</span>.</p>
 
+    <% if (typeof user !== 'undefined') { %>
+      <br>
+      <p><a href="/users" class="underline random-border">So, here's a list of all users.</a></p>
+    <% } else { %>
+      <p>So come on in and <a href="/sign-up" class="button random-border">Sign Up!</a> ...if you haven't already.
+    <% } %>
 
-    <p>So come on in and <a href="/sign-up" class="button random-border">Sign Up!</a> ...if you haven't already.
+
 
 
     <br><br><hr><br>
