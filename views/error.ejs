@@ -1,3 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('head'); %>
+
+  </head>
+  <body>
+    <%- include('header'); %>
+    <main>
+      <p>Oh lordy, lordy. Something's gone wrong.</p>
 <h1><%= message %></h1>
 <h2><%= error.status %></h2>
 <pre><%= error.stack %></pre>
+
+    </main>
+  <script src="/javascripts/feelings-word-move.js"></script>
+  <script src="/javascripts/bg-flowers.js"></script>
+  </body>
+</html>

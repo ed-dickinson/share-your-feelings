@@ -67,12 +67,6 @@
     </main>
     <script src="/javascripts/bg-flowers.js"></script>
     <script src="/javascripts/emotion-button.js"></script>
-    <script>
-    //fix html enitities
-    document.querySelectorAll('.message-text').forEach(message => {
-      let str = message.innerHTML;
-      message.innerHTML = str.replace(/&amp;/g, "&");
-    });
-    </script>
+    <script src="/javascripts/html-entities.js"></script>
   </body>
 </html>
