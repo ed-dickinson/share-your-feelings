@@ -6,6 +6,9 @@ const { body,validationResult } = require('express-validator');
 const passport = require("passport");
 const bcrypt = require('bcryptjs');
 
+var multer  = require('multer');
+var upload = multer({ dest: 'public/uploads/' });
+
 require('dotenv').config()
 const DBkey = process.env.DB_URL;
 const nodeMailer = require('nodemailer');
@@ -200,11 +203,6 @@ exports.add_post = function(req, res, next) {
 
 exports.add_email_post = function(req, res, next) {
 
-  // User.findByIdAndUpdate(req.user._id, {'email' : req.body.email}, {}, function(err){
-  //       if (err) { return next(err); }
-  //       res.redirect('you');
-  //   });
-
   req.user.email = req.body.email;
 
   req.user.save(function (err) {
@@ -212,6 +210,27 @@ exports.add_email_post = function(req, res, next) {
     res.redirect('you');
   });
 };
+
+exports.add_photo_post = [
+  upload.single('avatar'),
+  function(req, res, next) {
+    req.user.picture = req.file.filename;
+    req.user.save(function (err) {
+      if (err) { return next(err); }
+      res.redirect('you');
+    });
+
+}];
+
+// exports.add_photo_post = function(req, res, next) {
+//
+//   req.user.picture = req.body.email;
+//
+//   req.user.save(function (err) {
+//     if (err) { return next(err); }
+//     res.redirect('you');
+//   });
+// };
 
 exports.message_post = [
 

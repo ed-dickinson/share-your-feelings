@@ -10,11 +10,26 @@
     <%- include('header'); %>
     <main>
     <!-- <h1><%= title %></h1> -->
+    <span class='avatar-container'>
+      <% if (user.picture) { %>
+        <span class='avatar' style="background-image: url('/uploads/<%=user.picture%>')">
+          <!-- <img src="/uploads/<%=user.picture%>" -->
+        </span>
+      <% } else { %>
+        <span class='avatar avatar-empty'></span>
+        <span id='add-photo-button' class='add-link button add-photo-button'>Add Photo</span>
+        <form class='add-photo-form' action="/add_photo" method="post" enctype="multipart/form-data">
+          <button class="random-border">Upload</button>
+          <input type="file" name="avatar" />
+        </form>
+      <% } %>
+    </span>
+
     <h1><span class='bouncing-hand'>&#x1f44d;</span></h1>
     <p>Hello, <strong style='font-size: 2em;'><%=user.username%></strong></p>
     <p>That's you logged in, my friend!</p>
 
-    <span class='avatar'></span>
+
 
     <% if (user.joined) { %>
     <p>Joined on <%=user.joined.toLocaleDateString()%>.</p>
@@ -36,7 +51,7 @@
 
       <p>(Only so we can let you know if you have a message. No funny business, that's a promise.)</p>
     <% } %>
-    <p>Or add a profile pic? &#9758;</p>
+    <p>Or add a profile pic? <span class='pointing-hand'>&#9757;</span></p>
 
     <% if (user.friends.length > 0) { %>
     <p>Your contact book: </p>
@@ -67,7 +82,19 @@
         document.querySelector('.email-form').style.display = 'inline';
       };
       let emailButton = document.querySelector('.add-email-button');
-      emailButton.addEventListener('click', showEmailForm);
+      if (emailButton) {
+        emailButton.addEventListener('click', showEmailForm);
+      }
+
+      let photoButton = document.querySelector('.add-photo-button');
+      function showPhotoForm() {
+        photoButton.style.display = 'none';
+        document.querySelector('.add-photo-form>input').style.display = 'block';
+        document.querySelector('.add-photo-form>button').style.display = 'block';
+      };
+      if (photoButton) {
+        photoButton.addEventListener('click', showPhotoForm);
+      }
     </script>
   </body>
 </html>

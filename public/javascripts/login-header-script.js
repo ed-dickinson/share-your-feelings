@@ -11,7 +11,11 @@ function openLogIn() {
 
 }
 
-login_opener.addEventListener('click', openLogIn);
+if (login_opener) {
+  login_opener.addEventListener('click', openLogIn);
+}
+
+
 
 // document.querySelectorAll('.random-border').forEach(border => {border.style.borderColor = randomFrom(colours);});
 // document.querySelector('.button').style.borderColor = randomFrom(colours);

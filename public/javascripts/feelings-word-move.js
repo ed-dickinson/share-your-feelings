@@ -4,55 +4,44 @@ let feelings_words = document.querySelectorAll('.feelings-word');
 
 let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
 
-const emoColorsx = {
-  happy : 'gold',
-  anger : 'tomato',
-  sensitive : 'purple',
-  impulsive : 'orange',
-  fresh : 'springgreen',
-  growth : 'green',
-  grief : 'black',
-  sad : 'blue',
-  stable : 'brown', //chocolate
-  loving : 'pink'
-}
+feelings_words.forEach(word => {
+  word.style.color = randomFrom(colours);
+});
 
-const emoColors = {
-  happy : 'gold', //optimistic, energetic
-  angry : 'tomato', //love, excitement
-  impulsive : 'orange', //enthusiastic
-  fresh : 'springgreen', //envy?
-  growth : 'green', // life
-  grief : 'black',
-  sad : 'blue',
-  wise : 'orchid', //sensive
-  calm : 'deepskyblue',//calm & stable sad?
-  stable : 'brown', //chocolate reliable and strong
-  loving : 'pink' //kind, compassionate
-}
-//chocolate, darkgoldenrod, sienna
-//coral, tomato, firebrick, indianred
-//hotpink, lightcoral, lightpink
-//blueviolet, indigo, mediumpurple, orchid, plum
-//darkblue,
-//cadetblue, deepskyblue, lightskyblue
-//darkgreen, darkolivegreen, forestgreen, seagreen
-//limegreen, springgreen, palegreen
-//lightsalmon
-//gold, khaki
+// const emoColorsx = {
+//   happy : 'gold',
+//   anger : 'tomato',
+//   sensitive : 'purple',
+//   impulsive : 'orange',
+//   fresh : 'springgreen',
+//   growth : 'green',
+//   grief : 'black',
+//   sad : 'blue',
+//   stable : 'brown', //chocolate
+//   loving : 'pink'
+// }
 
-// let flowers = document.querySelectorAll('.flower');
-//
-// document.querySelectorAll('.flower').forEach(flower => {
-//   flower.style.color = randomFrom(colours);
-// });
-//
-// document.querySelector('.log-in').style.borderColor = randomFrom(colours);
+// const emoColors = {
+//   happy : 'gold', //optimistic, energetic
+//   angry : 'tomato', //love, excitement
+//   impulsive : 'orange', //enthusiastic
+//   fresh : 'springgreen', //envy?
+//   growth : 'green', // life
+//   grief : 'black',
+//   sad : 'blue',
+//   wise : 'orchid', //sensive
+//   calm : 'deepskyblue',//calm & stable sad?
+//   stable : 'brown', //chocolate reliable and strong
+//   loving : 'pink' //kind, compassionate
+// }
+
 
 
 function randomFrom(array) {
   return array[Math.floor(Math.random()*array.length)];;
 }
+
+if (window.innerWidth > 500) {
 
 function newColour(oldcolour) {
   let newI = (colours.indexOf(oldcolour)+(Math.random() < 0.5 ? 1 : 1));
@@ -64,9 +53,7 @@ function newColour(oldcolour) {
 
 let movers = [];
 
-feelings_words.forEach(word => {
-  word.style.color = randomFrom(colours);
-});
+
 
 for (let i = 0; i < 4; i++) {
   let parent = randomFrom(feelings_words);
@@ -162,6 +149,13 @@ function moveWords() {
     }
   });
 };
+
+} else { // mOBILE
+  document.querySelectorAll('.title-word').forEach(word => {
+    word.style.fontSize = word.parentNode.offsetWidth / word.offsetWidth + 'em';
+    word.style.color = randomFrom(colours);
+  })
+}
 
 // moveWords();
 // setInterval(moveWords, 2000);

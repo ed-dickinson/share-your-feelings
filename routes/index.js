@@ -23,6 +23,7 @@ router.post('/log-in', user_controller.log_in_post);
 
 router.post('/add', user_controller.add_post);
 router.post('/add_email', user_controller.add_email_post);
+router.post('/add_photo', user_controller.add_photo_post);
 
 router.post('/message', user_controller.message_post);
 

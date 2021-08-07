@@ -1,5 +1,7 @@
-let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
 
+// if (!typeof colours) {
+colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
+// }
 
 //chocolate, darkgoldenrod, sienna
 //coral, tomato, firebrick, indianred
@@ -54,8 +56,10 @@ console.log();
 document.querySelectorAll('.random-border').forEach(border => {border.style.borderColor = randomFrom(colours);});
 // document.querySelector('.button').style.borderColor = randomFrom(colours);
 
-let avatar = document.querySelector('.avatar');
-avatar.style.opacity = 0.25;
-avatar.style.backgroundColor = randomFrom(colours);
+let avatar = document.querySelector('.avatar-empty');
+if (avatar) {
+  avatar.style.opacity = 0.25;
+  avatar.style.backgroundColor = randomFrom(colours);
+}
 
 document.querySelectorAll('.contact-avatar').forEach(avatar => {avatar.style.backgroundColor = randomFrom(colours);});
