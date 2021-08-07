@@ -53,6 +53,18 @@ if (avatar) {
   avatar.style.backgroundColor = randomFrom(colours);
 }
 
+let avatars = document.querySelectorAll('.avatar-empty');
+avatars.forEach(avatar => {
+  avatar.style.opacity = 0.25;
+  avatar.style.backgroundColor = randomFrom(colours);
+});
+
+let avatarSub = document.querySelector('.avatar-sub');
+if (avatarSub) {
+  // avatarSub.style.opacity = 5;
+  avatarSub.style.backgroundColor = randomFrom(colours);
+}
+
 document.querySelectorAll('.contact-avatar').forEach(avatar => {avatar.style.backgroundColor = randomFrom(colours);});
 
 if (window.innerWidth <= 500){

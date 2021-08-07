@@ -119,7 +119,17 @@ exports.sign_up_post = [
   }
 ];
 
+exports.user_list = function(req, res, next) {
+  User.find()
+    // .select('name species description')
+    .exec(function (err, users) {
+      if (err) {return next(err);}
+      res.render('user_list', {title: 'User List', users: users})
+    })
+};
+
 exports.user_page = function(req, res, next) {
+
 
 if (typeof req.user != 'undefined') {
   async.waterfall([

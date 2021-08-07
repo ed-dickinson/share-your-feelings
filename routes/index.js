@@ -25,4 +25,6 @@ router.get('/log-out', user_controller.log_out_get);
 
 router.get('/user/:username', user_controller.user_page);
 
+router.get('/users', user_controller.user_list);
+
 module.exports = router;

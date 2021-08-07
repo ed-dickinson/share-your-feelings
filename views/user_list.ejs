@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('head'); %>
+
+  </head>
+  <body>
+    <%- include('header'); %>
+    <main>
+
+    <h1><%= title %></h1>
+
+      <p class="underline random-border" style="display: inline-block; padding-bottom: 5px;">This is a listing of everyone on the site:</p><br><br>
+
+
+    <% users.forEach(user => { %>
+      <span class="user-list-user">
+      <% if (user.picture) {%>
+        <div class="avatar avatar-user-list avatar-present" style="background-image: url('/uploads/<%=user.picture%>')"></div>
+      <% } else { %>
+        <div class="avatar avatar-user-list avatar-empty"></div>
+      <% } %>
+
+      <a class="button random-border" href="/user/<%=user.username%>"><span class="user-list-username"><%=user.username%></span></a>
+    </span>
+    <% }); %>
+
+
+    <br><br><hr><br>
+    </main>
+    <script src="/javascripts/bg-flowers.js"></script>
+    <script src="/javascripts/html-entities.js"></script>
+  </body>
+</html>
