@@ -19,11 +19,11 @@
           <form action="/log-in" method="POST">
             <!-- <label for="username">U:</label> -->
             <input name="username" placeholder="username" type="text" class="random-border"
-value="ed"
+value="<%= (typeof user !== 'undefined') ? user.username : ''%>"
             />
             <!-- <label for="password">P:</label> -->
             <br><input name="password" placeholder="password" type="password" class="random-border"
-value="jenny"
+value=""
             />
             <br><button class="random-border">Log In</button>
           </form>
