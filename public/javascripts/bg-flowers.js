@@ -3,16 +3,6 @@
 colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
 // }
 
-//chocolate, darkgoldenrod, sienna
-//coral, tomato, firebrick, indianred
-//hotpink, lightcoral, lightpink
-//blueviolet, indigo, mediumpurple, orchid, plum
-//darkblue,
-//cadetblue, deepskyblue, lightskyblue
-//darkgreen, darkolivegreen, forestgreen, seagreen
-//limegreen, springgreen, palegreen
-//lightsalmon
-//gold, khaki
 
 function randomFrom(array) {
   return array[Math.floor(Math.random()*array.length)];;
@@ -37,7 +27,11 @@ console.log(margin + ',' + height);
 
 for (let i = 0; i < Math.floor(margin*height*0.0002); i++) {
   let bg_flower = document.createElement('span');
-  bg_flower.innerHTML = i % 2 != 1 ? '&#x273F;' : '&#x2740;';
+  if (window.innerWidth > 500) {
+    bg_flower.innerHTML = i % 2 != 1 ? '&#x273F;' : '&#x2740;';
+  } else {
+    bg_flower.innerHTML = i % 2 != 1 ? '&#x1f33c;' : '&#x1f338;';
+  }
   bg_flower.classList.add('bg-flower');
   bg_flower.style.color = randomFrom(colours);
   i % 2 != 1
@@ -49,12 +43,9 @@ for (let i = 0; i < Math.floor(margin*height*0.0002); i++) {
 
 
   document.body.appendChild(bg_flower);
-  // console.log(document.body.offsetHeight + '/' + document.body.scrollHeight + 'x' + document.body.offsetWidth);
 }
 console.log();
-// console.log(window.innerHeight + 'x' + window.innerWidth);
 document.querySelectorAll('.random-border').forEach(border => {border.style.borderColor = randomFrom(colours);});
-// document.querySelector('.button').style.borderColor = randomFrom(colours);
 
 let avatar = document.querySelector('.avatar-empty');
 if (avatar) {
@@ -63,3 +54,9 @@ if (avatar) {
 }
 
 document.querySelectorAll('.contact-avatar').forEach(avatar => {avatar.style.backgroundColor = randomFrom(colours);});
+
+if (window.innerWidth <= 500){
+  document.querySelectorAll('.flower').forEach(flower => {
+    flower.innerHTML = '&nbsp;&#x1f33c;';
+  })
+}

@@ -8,14 +8,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Share Your Feelings', user: req.user });
 });
 
-// router.post(
-//   "/log-in",
-//   passport.authenticate("local", {
-//     successRedirect: "/",
-//     failureRedirect: "/"
-//   })
-// );
-
 router.get('/sign-up', user_controller.sign_up);
 router.post('/sign-up', user_controller.sign_up_post);
 

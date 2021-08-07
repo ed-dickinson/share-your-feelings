@@ -1,40 +1,4 @@
-// let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
 
-
-//chocolate, darkgoldenrod, sienna
-//coral, tomato, firebrick, indianred
-//hotpink, lightcoral, lightpink
-//blueviolet, indigo, mediumpurple, orchid, plum
-//darkblue,
-//cadetblue, deepskyblue, lightskyblue
-//darkgreen, darkolivegreen, forestgreen, seagreen
-//limegreen, springgreen, palegreen
-//lightsalmon
-//gold, khaki
-
-const emoColorsxxxx = {
-  happy : 'gold', //optimistic, energetic
-  angry : 'tomato', //love, excitement
-  impulsive : 'orange', //enthusiastic
-  fresh : 'springgreen', //envy?
-  growth : 'green', // life
-  grief : 'black',
-  sad : 'blue',
-  wise : 'orchid', //sensive
-  calm : 'deepskyblue',//calm & stable sad?
-  stable : 'brown', //chocolate reliable and strong
-  loving : 'pink' //kind, compassionate
-}
-//chocolate, darkgoldenrod, sienna
-//coral, tomato, firebrick, indianred
-//hotpink, lightcoral, lightpink
-//blueviolet, indigo, mediumpurple, orchid, plum
-//darkblue,
-//cadetblue, deepskyblue, lightskyblue
-//darkgreen, darkolivegreen, forestgreen, seagreen
-//limegreen, springgreen, palegreen
-//lightsalmon
-//gold, khaki
 
 let emotions = [
   {emotion : "Full of Life",

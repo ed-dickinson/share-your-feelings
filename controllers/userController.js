@@ -6,8 +6,19 @@ const { body,validationResult } = require('express-validator');
 const passport = require("passport");
 const bcrypt = require('bcryptjs');
 
-var multer  = require('multer');
-var upload = multer({ dest: 'public/uploads/' });
+const multer  = require('multer');
+const upload = multer({
+  dest: 'public/uploads/',
+  limits :{fileSize : 500000},
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+    }
+  }
+});
 
 require('dotenv').config()
 const DBkey = process.env.DB_URL;
@@ -67,17 +78,6 @@ exports.sign_up_post = [
 
     const errors = validationResult(req);
 
-    // bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-    //   if (err) return next(err)
-    //   else { return hashedPassword;}//store in db
-    // });
-
-    // const user = new User({
-    //   username: req.body.username,
-    //   password: req.body.password,
-    //   joined: req.body.joined//2021-08-05T00:00:00.000+00:00
-    // });
-
     if (!errors.isEmpty()) {
       res.render('sign_up', {title: 'Sign Up',
       // user: user,
@@ -96,10 +96,7 @@ exports.sign_up_post = [
             message: "There's already someone who goes by this name. Please choose another:",
             errors: errors.array()});
         } else {
-          // user.save(function (err) {
-          //   if (err) {return next(err);}
-          //   res.redirect('user/' + user.username);
-          // });
+
           bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
             if (err) return next(err)
             else {
@@ -117,31 +114,12 @@ exports.sign_up_post = [
           });
         };
       })
-    // .save(err => {
-    //   if (err) {
-    //     return next(err);
-    //   }
-    //   res.redirect('/');
-    // })
+
     }
   }
 ];
 
 exports.user_page = function(req, res, next) {
-  // User.findOne({'username' : req.params.username})
-  // .populate({
-  //   path: 'friends'
-  //   // ,match: { id:  req.user._id  }
-  // })
-  // .exec(function(err, other_user){
-  //   if (err) {return next(err);}
-  //   if (other_user==null) {
-  //     var err = new Error('No user by this name: ' + req.params.username + '.');
-  //     err.status = 404;
-  //     return next(err);
-  //   }
-  //   res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
-  // });
 
 if (typeof req.user != 'undefined') {
   async.waterfall([
@@ -187,11 +165,6 @@ if (typeof req.user != 'undefined') {
 };
 
 exports.add_post = function(req, res, next) {
-  // User.findById(req.user._id, {'friends' : req.user.friends.push(req.body.id)}, {}, function(err, other_user){
-  //   if (err) {return next(err);}
-  //
-  //   res.render('user', {title: other_user.username, other_user: other_user, user: req.user});
-  // });
 
   req.user.friends.unshift(req.body.id);
 
@@ -216,21 +189,14 @@ exports.add_photo_post = [
   function(req, res, next) {
     req.user.picture = req.file.filename;
     req.user.save(function (err) {
-      if (err) { return next(err); }
+      if (err) {
+        return next(err);
+      }
       res.redirect('you');
     });
 
 }];
 
-// exports.add_photo_post = function(req, res, next) {
-//
-//   req.user.picture = req.body.email;
-//
-//   req.user.save(function (err) {
-//     if (err) { return next(err); }
-//     res.redirect('you');
-//   });
-// };
 
 exports.message_post = [
 
@@ -256,33 +222,6 @@ exports.message_post = [
       return;
     }
     else {
-    //   message.save(function (err) {
-    //     User.findByIdAndUpdate(req.user._id, {'messages' : req.user.messages.push(req.body.id)}, {}, function(err){
-    //       if (err) { return next(err); }
-    //       res.redirect('user/' + req.body.receipient);
-    //   });
-    // })
-
-      // async.waterfall([
-      //   function(callback) {
-      //     message.save(
-      //       function(err, saved) {
-      //         callback(null, saved)
-      //       }
-      //     );
-      //   },
-      //   function(saved, callback) {
-      //     let saved_message = "610d02dc4a4b79997bfe9902";
-      //     User.findByIdAndUpdate(req.user._id, {'messages' : req.user.messages.push(saved_message)}, {},
-      //       function(err, xxx) {
-      //         callback(null, {xxx, saved})
-      //       }
-      //     )
-      //   },
-      // ], function (err, results) {
-      //   if (err) { return next(err); }
-      //   res.redirect('user/' + req.body.receipient);
-      // })
 
       async.parallel({
         message: function(callback) {
@@ -298,20 +237,6 @@ exports.message_post = [
       }, function (err,results) {
         if (err) { return next(err); }
 
-        // let mailOptions = {
-        //   from: 'someonesharedafeeling@gmail.com',
-        //   to: 'edward.ejd@gmail.com',
-        //   subject: 'Someone shared a feeling with you!',
-        //   html: req.user.username + ' has shared a feeling with you. <a href="">Read it here</a>.'
-        // };
-        // transporter.sendMail(mailOptions, function(error, info){
-        //   if (error) {
-        //     console.log(error);
-        //   } else {
-        //     console.log('Email was sent successfully: ' + info.response);
-        //   }
-        //   res.redirect('user/' + req.body.receipient);
-        // });
 
         if (req.body.email) {
           let mailOptions = {
@@ -332,30 +257,7 @@ exports.message_post = [
           res.redirect('user/' + req.body.receipient);
         }
 
-
-
       })
-
-       // message.save(function (err) {
-       //   if (err) { return next(err); }
-       //   res.redirect('user/' + req.body.receipient);
-       // });
-
-       // async.parallel({
-       //      save: function(callback) {
-       //        message.save(callback)
-       //      },
-       //      add: function(callback) {
-       //        User.findByIdAndUpdate(req.user._id, {'messages' : req.user.messages.push(req.body.id)}, {}, function(callback))
-       //      },
-       //  }, function(err, results) {
-       //      if (err) { return next(err); }
-       //      res.redirect('user/' + req.body.receipient);
-       //
-       //  });
-
-
-
 
     }
   }

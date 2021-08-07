@@ -9,11 +9,10 @@
 
     <%- include('header'); %>
     <main>
-    <!-- <h1><%= title %></h1> -->
+
     <span class='avatar-container'>
       <% if (user.picture) { %>
         <span class='avatar' style="background-image: url('/uploads/<%=user.picture%>')">
-          <!-- <img src="/uploads/<%=user.picture%>" -->
         </span>
       <% } else { %>
         <span class='avatar avatar-empty'></span>
@@ -51,10 +50,12 @@
 
       <p>(Only so we can let you know if you have a message. No funny business, that's a promise.)</p>
     <% } %>
-    <p>Or add a profile pic? <span class='pointing-hand'>&#9757;</span></p>
+    <% if (!user.picture) { %>
+      <p>Or add a profile pic? <span class='pointing-hand'>&#9757;</span></p>
+    <% } %>
 
     <% if (user.friends.length > 0) { %>
-    <p>Your contact book: </p>
+    <p style="border-bottom: 2px solid coral; display: inline-block;" class="random-border">Your contact book:</p><br>
     <span class="contact-book gen-border random-border" >
       <% friends.forEach(friend => { %>
         <a href="user/<%=friend.username%>"><div class="contact-ring"></div><div class="contact random-border"><span class="contact-avatar"></span><span class="contact-name"><strong><%=friend.username%></strong></span></div></a>

@@ -16,16 +16,7 @@ const emoColorsxx = {
   stable : 'brown', //chocolate reliable and strong
   loving : 'pink' //kind, compassionate
 }
-//chocolate, darkgoldenrod, sienna
-//coral, tomato, firebrick, indianred
-//hotpink, lightcoral, lightpink
-//blueviolet, indigo, mediumpurple, orchid, plum
-//darkblue,
-//cadetblue, deepskyblue, lightskyblue
-//darkgreen, darkolivegreen, forestgreen, seagreen
-//limegreen, springgreen, palegreen
-//lightsalmon
-//gold, khaki
+
 
 function randomFrom(array) {
   return array[Math.floor(Math.random()*array.length)];;

@@ -1,41 +1,10 @@
 let feelings_words = document.querySelectorAll('.feelings-word');
 
-// let colours = ['dodgerblue', 'pink', 'coral', 'gold',  'springgreen'];
-
 let colours = ['dodgerblue', 'orchid', 'pink', 'coral', 'gold',  'springgreen'];
 
 feelings_words.forEach(word => {
   word.style.color = randomFrom(colours);
 });
-
-// const emoColorsx = {
-//   happy : 'gold',
-//   anger : 'tomato',
-//   sensitive : 'purple',
-//   impulsive : 'orange',
-//   fresh : 'springgreen',
-//   growth : 'green',
-//   grief : 'black',
-//   sad : 'blue',
-//   stable : 'brown', //chocolate
-//   loving : 'pink'
-// }
-
-// const emoColors = {
-//   happy : 'gold', //optimistic, energetic
-//   angry : 'tomato', //love, excitement
-//   impulsive : 'orange', //enthusiastic
-//   fresh : 'springgreen', //envy?
-//   growth : 'green', // life
-//   grief : 'black',
-//   sad : 'blue',
-//   wise : 'orchid', //sensive
-//   calm : 'deepskyblue',//calm & stable sad?
-//   stable : 'brown', //chocolate reliable and strong
-//   loving : 'pink' //kind, compassionate
-// }
-
-
 
 function randomFrom(array) {
   return array[Math.floor(Math.random()*array.length)];;
@@ -149,6 +118,18 @@ function moveWords() {
     }
   });
 };
+let indexZ = 0;
+document.querySelectorAll('.title-word').forEach(word => {
+  if (indexZ != 2) {
+    word.style.fontSize = word.parentNode.offsetWidth / word.offsetWidth / 4 + 'em';
+  } else {
+    word.style.fontSize = word.parentNode.offsetWidth / word.offsetWidth / 2 + 'em';
+  }
+  indexZ++;
+
+  word.style.color = randomFrom(colours);
+
+})
 
 } else { // mOBILE
   document.querySelectorAll('.title-word').forEach(word => {
@@ -156,6 +137,3 @@ function moveWords() {
     word.style.color = randomFrom(colours);
   })
 }
-
-// moveWords();
-// setInterval(moveWords, 2000);
