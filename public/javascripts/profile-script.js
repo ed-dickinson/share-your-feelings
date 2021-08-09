@@ -21,6 +21,15 @@ if (photoButton) {
   photoButton.addEventListener('click', showPhotoForm);
 }
 
-document.querySelectorAll('.message-text').forEach(message => {
-  console.log(message.length);
-})
+if (window.innerWidth <= 500) {
+  let profileAvatar = document.querySelector('.avatar');
+  let deleteButton = document.querySelector('.delete-photo-form');
+
+  function showDeleteButton() {
+    deleteButton.style.display = 'block';
+  }
+
+  if (profileAvatar.classList.contains('avatar-profile')) {
+    profileAvatar.addEventListener('click', showDeleteButton);
+  }
+}

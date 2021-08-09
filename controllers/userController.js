@@ -9,16 +9,18 @@ const bcrypt = require('bcryptjs');
 const multer  = require('multer');
 const upload = multer({
   dest: 'public/uploads/',
-  limits :{fileSize : 500000},
+  limits :{fileSize : 2500000},
   fileFilter: (req, file, cb) => {
     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
       cb(null, true);
     } else {
       cb(null, false);
-      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+      return cb(new Error('Only .png, .gif, .jpg and .jpeg format allowed!'));
     }
   }
 });
+const sharp = require('sharp');
+const fs = require('fs');
 
 require('dotenv').config()
 const DBkey = process.env.DB_URL;
@@ -38,9 +40,8 @@ exports.sign_up = function(req, res) {
   res.render('sign_up', {title: 'Sign Up', user: req.user});
 };
 
-exports.log_in_post =  passport.authenticate("local", {
-    successRedirect: "/you",
-    // successRedirect: req.protocol,
+exports.log_in_post = passport.authenticate("local", {
+    successRedirect: "/you", //req.url
     failureRedirect: "/"
   });
 
@@ -169,7 +170,7 @@ if (typeof req.user != 'undefined') {
     });
 
   } else {
-    res.render('sorry', {message: 'Users are only visible to other users.'});
+    res.render('sorry', {message: 'Users are only visible to other users.', destination: req.url});
   }
 
 
@@ -195,18 +196,48 @@ exports.add_email_post = function(req, res, next) {
   });
 };
 
+// exports.add_photo_post = [
+//   upload.single('avatar'),
+//   function(req, res, next) {
+//     req.user.picture = req.file.filename;
+//     sharp(req.file.path).resize(250,250)
+//   .toFile(req.file.path);
+//     req.user.save(function (err) {
+//       if (err) {
+//         return next(err);
+//       }
+//       res.redirect('you');
+//     });
+// }];
+
 exports.add_photo_post = [
   upload.single('avatar'),
   function(req, res, next) {
     req.user.picture = req.file.filename;
+    sharp(req.file.path).resize(250,250).toBuffer().then(data => {
+      fs.writeFileSync(req.file.path, data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  // .toFile(req.file.path);
     req.user.save(function (err) {
       if (err) {
         return next(err);
       }
       res.redirect('you');
     });
-
 }];
+
+exports.delete_photo_post = function(req, res, next) {
+
+  req.user.picture = '';
+
+  req.user.save(function (err) {
+    if (err) { return next(err); }
+    res.redirect('you');
+  });
+};
 
 
 exports.message_post = [

@@ -12,8 +12,13 @@
 
     <span class='avatar-container'>
       <% if (user.picture) { %>
-        <span class='avatar' style="background-image: url('/uploads/<%=user.picture%>')">
+        <span class='avatar avatar-profile' style="background-image: url('/uploads/<%=user.picture%>')">
         </span>
+        <form class='delete-photo-form' action="/delete_photo" method="post">
+          <button class="random-border">Delete</button>
+          <!-- <input type="file" name="avatar" /> -->
+        </form>
+        <!-- <span class='delete-photo-button'><a href='delete_photo' class='button'>Delete</a></span> -->
       <% } else { %>
         <span class='avatar avatar-empty'></span>
         <span id='add-photo-button' class='add-link button add-photo-button'>Add Photo</span>
@@ -37,7 +42,7 @@
     <% if (user.email) { %>
       <p>e-mail: <%=user.email%></p>
     <% } else { %>
-      <p class="add-email"><span class='button add-email-button'>Add your email?</span>
+      <p class="add-email"><span class='button add-email-button random-border'>Add your email?</span>
         <form action="/add_email" method="POST" class="email-form random-border" style="display:none">
           <input hidden name="id" type="text" value="<%=user._id%>"/>
           <input name="email" type="text" class='random-border'/>
@@ -64,12 +69,12 @@
     <!-- <p>Send a feeling out into the world:</p> -->
     <% } else { %>
     <p>You don't have any friends yet!</p>
-    <p>Why not open up to this random crumb?</p>
-    <p><a href='user/crumb' class='button random-border'>crumb</a></p>
+    <!-- <p>Why not open up to this random crumb?</p>
+    <p><a href='user/crumb' class='button random-border'>crumb</a></p> -->
     <!-- <p>Or send some feelings out into the world:</p> -->
     <% } %>
-<br>
-    <p><a href="/users" class="underline random-border">Here's a list of all users.</a></p>
+
+    <p><a href="/users" class="underline random-border button">Here's a list of all users.</a></p><p>Maybe you can find some friends.</p>
 
 
     <br><br><hr><br>
